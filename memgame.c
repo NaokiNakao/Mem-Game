@@ -3,24 +3,36 @@
 #include <conio.c>
 #include <time.h>
 
-#define FILA   4
-#define COLUMN 4
-#define CANFIG 8
-#define MAXASIGFIG 2
+/* Directivas de preprocesador */
+
+#define TRUE    1
+#define FALSE   0
+
+#define ROW          4
+#define COL          4
+#define FIG          8
+#define MAXASIGFIG   2
+#define INI_X       10
+#define INI_Y        5
+#define ESP          4
 
 #define CT  YELLOW
 #define CF  BLUE
 
+/* Prototipos de función */
 
-void genpantalla(int [][COLUMN],int []);
-void putpantallaxy(int [][COLUMN],int,int);
+void generateMatrix(int [][COL], int []);
+void showMatrix(int [][COL], int, int);
 
 int main()
 {
    srand(time(NULL));
-   int figuras[CANFIG] = {1,2,3,4,5,6,15,18};
 
-   //int pantalla[FILA][COLUMN], indfig = 0;
+   int figures[FIG] = {1, 2, 3, 4, 5, 6, 15, 18};
+   int table[ROW][COL];
+
+   generateMatrix(table, figures);
+   showMatrix(table, INI_X, INI_Y);
 
    /*for ( int indfil = 0; indfil < FILA; indfil ++ )
    {
@@ -30,33 +42,60 @@ int main()
    }*/
 
    return 0;
-
 }
 
 /*
-   Función: genpantalla
-   Argumentos: int pantalla[][COLUMN], pantalla que contendría
-               las figuras a parear.
-               int figuras[], arreglo que contiene las figuras
-               a colocar en la pantalla.
-   Objetivo: Asignar aleatoriamente un par de figuras en la pantalla.
-   Retorno: ningún valor.
+   Función    : generateTable
+   Argumentos : int matrix[][COL], pantalla que contendría las figuras a parear.
+                int figures[], arreglo que contiene las figuras a colocar en la pantalla.
+   Objetivo   : Asignar aleatoriamente un par de figuras en la pantalla.
+   Retorno    : ---
 */
-void genpantalla(int pantalla[][COLUMN],int figuras[])
+void generateMatrix(int matrix[][COL], int figures[])
 {
-   int fila,columna, cont;
-   for ( int ind = 0; ind < CANFIG; ind ++  )
+   int row, col, count;
+
+   for (int index = 0; index < FIG; index++)
    {
-      cont = 0;
+      count = 0;
       do{
          do{
-            fila = rand() % FILA;
-            columna = rand() % COLUMN;
-         }while ( pantalla[fila][columna] == 0 );
-         pantalla[fila][columna] = figuras[ind];
-         cont++;
-      }while ( cont != MAXASIGFIG );
+            row = rand() % ROW;
+            col = rand() % COL;
+         }while (matrix[row][col] == 0);
+         matrix[row][col] = figures[index];
+         count++;
+      }while (count != MAXASIGFIG);
    }
+
+   return;
+}
+
+/*
+   Función    : showMatrix
+   Argumentos : int matrix[][COL] : contiene las figuras que se mostrarán en pantalla.
+                int x : posición inicial en "x".
+                int y : posición inicial en "y".
+   Objetivo   : mostrar las figuras del juego en una posición específica.
+   Retorno    : ---
+*/
+void showMatrix(int matrix[][COL], int x, int y)
+{
+   int i, j, pos_x = x, pos_y = y;
+
+   for (i = 0; i < ROW; i++)
+   {
+      for (j = 0; j < COL; j++)
+      {
+         gotoxy(pos_x, pos_y);
+         printf("%c", matrix[i][j]);
+         pos_x += ESP;
+      }
+      pos_x = x;
+      pos_y++;
+   }
+
+   return;
 }
 
 
