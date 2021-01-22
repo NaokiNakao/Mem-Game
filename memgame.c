@@ -16,13 +16,17 @@
 #define INI_Y        5
 #define ESP          4
 
-#define CT  YELLOW
-#define CF  BLUE
+#define DTC   LIGHTGRAY
+#define DBC   BLACK
+#define CT    YELLOW
+#define CB    BLUE
 
 /* Prototipos de función */
 
 void generateMatrix(int [][COL], int []);
 void showMatrix(int [][COL], int, int);
+void setColor(int, int);
+void defaultColor();
 
 int main()
 {
@@ -82,6 +86,8 @@ void showMatrix(int matrix[][COL], int x, int y)
    pos_x = x;
    pos_y = y;
 
+   setColor(CT, CB);
+
    for (i = 0; i < ROW; i++)
    {
       for (j = 0; j < COL; j++)
@@ -94,6 +100,34 @@ void showMatrix(int matrix[][COL], int x, int y)
       pos_y++;
    }
 
+   defaultColor();
+
+   return;
+}
+
+/*
+   Función    : setColor
+   Argumentos : int ct : color del texto.
+                int cb : color del fondo.
+   Objetivo   : cambiar el color del texto y fondo.
+   Retorno    : ---
+*/
+void setColor(int ct, int cb)
+{
+   textcolor(ct);
+   textbackground(cb);
+   return;
+}
+
+/*
+   Función    :
+   Argumentos : ---
+   Objetivo   : establecer el los colores por defecto de la consola (fondo negro, texto gris)
+   Retorno    : ---
+*/
+void defaultColor()
+{
+   setColor(DTC, DBC);
    return;
 }
 
