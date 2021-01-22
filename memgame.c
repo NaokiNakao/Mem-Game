@@ -28,18 +28,14 @@ int main()
 {
    srand(time(NULL));
 
-   int figures[FIG] = {1, 2, 3, 4, 5, 6, 15, 18};
+   int figures[FIG] = {1, 2, 3, 4, 5, 6, 15, 18}, *p_figures;
+   p_figures = (int*)malloc(FIG*sizeof(int));
+
    int table[ROW][COL];
 
    generateMatrix(table, figures);
+   free(p_figures);
    showMatrix(table, INI_X, INI_Y);
-
-   /*for ( int indfil = 0; indfil < FILA; indfil ++ )
-   {
-      for ( int indcol = 0; indcol < COLUMN; indcol ++ )
-         printf("%1d ",pantalla[indfil][indcol]);
-      printf("\n");
-   }*/
 
    return 0;
 }
@@ -81,7 +77,10 @@ void generateMatrix(int matrix[][COL], int figures[])
 */
 void showMatrix(int matrix[][COL], int x, int y)
 {
-   int i, j, pos_x = x, pos_y = y;
+   int i, j, pos_x, pos_y;
+
+   pos_x = x;
+   pos_y = y;
 
    for (i = 0; i < ROW; i++)
    {
